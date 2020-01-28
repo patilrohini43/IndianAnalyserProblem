@@ -25,7 +25,8 @@ public class StateCensusAnalyser {
             return namOfEateries;
         }
         catch (IOException e) {
-            throw new CensusAnalyserException("Please Enter Correct File Path");
+            throw new CensusAnalyserException(e.getMessage(),
+                    CensusAnalyserException.ExceptionType.TYPE_NOTFOUND);
         }
 
     }
