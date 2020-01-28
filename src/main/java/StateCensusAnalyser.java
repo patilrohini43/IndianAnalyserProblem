@@ -15,18 +15,25 @@ public class StateCensusAnalyser {
             CsvToBeanBuilder<IndiaCensusCSV> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
             csvToBeanBuilder.withType(IndiaCensusCSV.class);
             csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
+            csvToBeanBuilder.withSeparator(',');
             CsvToBean<IndiaCensusCSV> csvToBean = csvToBeanBuilder.build();
             Iterator<IndiaCensusCSV> censusCSVIterator = csvToBean.iterator();
             int namOfEateries = 0;
             while (censusCSVIterator.hasNext()) {
                 namOfEateries++;
                 IndiaCensusCSV censusData = censusCSVIterator.next();
+                System.out.println(censusData);
             }
             return namOfEateries;
         }
         catch (IOException e) {
             throw new CensusAnalyserException(e.getMessage(),
                     CensusAnalyserException.ExceptionType.TYPE_NOTFOUND);
+        }
+        catch (RuntimeException e)
+        {
+            throw new CensusAnalyserException(e.getMessage(),
+                    CensusAnalyserException.ExceptionType.HEADERNOTFOUND);
         }
 
     }
