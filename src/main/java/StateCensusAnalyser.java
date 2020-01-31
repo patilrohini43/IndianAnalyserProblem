@@ -21,8 +21,6 @@ public class StateCensusAnalyser {
             int namOfEateries = 0;
             while (censusCSVIterator.hasNext()) {
                 namOfEateries++;
-                IndiaCensusCSV censusData = censusCSVIterator.next();
-                System.out.println(censusData);
             }
             return namOfEateries;
         }
@@ -38,4 +36,22 @@ public class StateCensusAnalyser {
 
     }
 
+    public int loadIndiaStateCensusData(String csvFilePath) throws CensusAnalyserException {
+        try {
+            Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
+            CsvToBeanBuilder<CsvState> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
+            csvToBeanBuilder.withType(CsvState.class);
+            csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
+            CsvToBean<CsvState> csvToBean = csvToBeanBuilder.build();
+            Iterator<CsvState> censusCSVIterator = csvToBean.iterator();
+            int namOfEateries = 0;
+            while (censusCSVIterator.hasNext()) {
+                namOfEateries++;
+            }
+            return namOfEateries;
+        } catch (IOException e) {
+            throw new CensusAnalyserException(e.getMessage(),
+                    CensusAnalyserException.ExceptionType.TYPE_NOTFOUND);
+        }
+    }
 }
