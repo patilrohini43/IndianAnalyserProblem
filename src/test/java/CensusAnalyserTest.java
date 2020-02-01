@@ -1,8 +1,6 @@
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-
 import java.io.IOException;
 
 public class CensusAnalyserTest {
@@ -48,7 +46,7 @@ public class CensusAnalyserTest {
     public void givenIndianStateCsvFile_CorrectButHeaderIncorrect() {
         try{
             StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
-            censusAnalyser.loadIndiaCensusData(INDIA_STATE_PATH);
+            censusAnalyser.loadIndiaCensusData(INDIA_CENSUS_CSV_FILE_PATH);
         }catch (CensusAnalyserException e){
             Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADERNOTFOUND,e.type);
         }
