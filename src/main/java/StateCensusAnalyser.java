@@ -5,7 +5,6 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
-
 public class StateCensusAnalyser {
 
     public int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException {
@@ -23,6 +22,7 @@ public class StateCensusAnalyser {
             throw new CensusAnalyserException(e.getMessage(),
                     CensusAnalyserException.ExceptionType.HEADERNOTFOUND);
         }
+
     }
 
     public int loadIndiaStateCensusData(String csvFilePath) throws CensusAnalyserException {
