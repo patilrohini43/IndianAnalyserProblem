@@ -5,12 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 
 public class CsvBuilder<T> implements ICsvBuilder {
-      public  Iterator<T> getCSVFilterIterator(Reader reader, Class csvClass) {
+    @Override
+    public  Iterator<T> getCSVFilterIterator(Reader reader, Class csvClass) {
           return this.getCsvBean(reader,csvClass).iterator();
       }
 
     @Override
-    public List getCSVFilteerList(Reader reader, Class csvClass) {
+    public List getCSVFilterList(Reader reader, Class csvClass) {
         return  this.getCsvBean(reader,csvClass).parse();
     }
 
@@ -20,6 +21,4 @@ public class CsvBuilder<T> implements ICsvBuilder {
         csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
         return csvToBeanBuilder.build();
     }
-
-
 }
