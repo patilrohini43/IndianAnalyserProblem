@@ -56,7 +56,7 @@ public class CensusAnalyserTest {
     public void givenIndianStateCsvFile_ShouldReturnExactCount() {
         try {
             StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
-           int numCount= censusAnalyser.loadIndiaStateCensusData(INDIA_STATE_PATH);
+           int numCount= censusAnalyser.loadIndiaStateCSVCensusData(INDIA_STATE_PATH);
             Assert.assertEquals(37,numCount);
         } catch (CensusAnalyserException e) {
             e.printStackTrace();
@@ -66,10 +66,11 @@ public class CensusAnalyserTest {
     @Test
     public void  givenIndianStateCsvFileData_AplhabeticalOrder() throws CensusAnalyserException {
         StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
-        stateCensusAnalyser.loadIndiaCensusData(INDIA_CENSUS_CSV_FILE_PATH);
-        String sortedData=stateCensusAnalyser.getAlphabeticalOrderData();
+        stateCensusAnalyser.loadIndiaStateCensusData(INDIA_CENSUS_CSV_FILE_PATH);
+        String sortedData=stateCensusAnalyser.getAlphabeticalOrderData("state");
         IndiaCensusCSV[] indiaCensusCSVList = new Gson().fromJson(sortedData,IndiaCensusCSV[].class);
         Assert.assertEquals("Andhra Pradesh",indiaCensusCSVList[0].state);
     }
+
 }
 
