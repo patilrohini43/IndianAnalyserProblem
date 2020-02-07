@@ -19,6 +19,7 @@ public class StateCensusAnalyser {
         this.sortMap = new HashMap<>();
         this.sortMap.put(SortField.STATE, Comparator.comparing(census -> census.state));
         this.sortMap.put(SortField.population, Comparator.comparing(census -> census.population));
+        this.sortMap.put(SortField.areaInSqKm, Comparator.comparing(census -> census.areaInSqKm));
     }
 
 

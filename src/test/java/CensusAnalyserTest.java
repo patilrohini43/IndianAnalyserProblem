@@ -67,10 +67,9 @@ public class CensusAnalyserTest {
     public void  givenIndianStateCsvFileData_AplhabeticalOrder() throws CensusAnalyserException {
         StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
         stateCensusAnalyser.loadIndiaStateCensusData(INDIA_CENSUS_CSV_FILE_PATH);
-        String sortedData=stateCensusAnalyser.getAlphabeticalOrderData(SortField.population);
-        System.out.println("sort"+sortedData);
+        String sortedData=stateCensusAnalyser.getAlphabeticalOrderData(SortField.areaInSqKm);
         IndiaCensusCSV[] indiaCensusCSVList = new Gson().fromJson(sortedData,IndiaCensusCSV[].class);
-        Assert.assertEquals(199812341,indiaCensusCSVList[0].population);
+        Assert.assertEquals(342239,indiaCensusCSVList[0].areaInSqKm);
     }
 
 }
