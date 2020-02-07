@@ -67,10 +67,10 @@ public class CensusAnalyserTest {
     public void  givenIndianStateCsvFileData_AplhabeticalOrder() throws CensusAnalyserException {
         StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
         stateCensusAnalyser.loadIndiaStateCensusData(INDIA_CENSUS_CSV_FILE_PATH);
-        String sortedData=stateCensusAnalyser.getAlphabeticalOrderData(SortField.STATE);
+        String sortedData=stateCensusAnalyser.getAlphabeticalOrderData(SortField.population);
         System.out.println("sort"+sortedData);
         IndiaCensusCSV[] indiaCensusCSVList = new Gson().fromJson(sortedData,IndiaCensusCSV[].class);
-        Assert.assertEquals("Andhra Pradesh",indiaCensusCSVList[0].state);
+        Assert.assertEquals(199812341,indiaCensusCSVList[0].population);
     }
 
 }

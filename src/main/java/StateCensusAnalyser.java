@@ -18,6 +18,7 @@ public class StateCensusAnalyser {
     public StateCensusAnalyser() {
         this.sortMap = new HashMap<>();
         this.sortMap.put(SortField.STATE, Comparator.comparing(census -> census.state));
+        this.sortMap.put(SortField.population, Comparator.comparing(census -> census.population));
     }
 
 
@@ -69,13 +70,13 @@ public class StateCensusAnalyser {
         return namOfEateries;
     }
 
-    public String getAlphabeticalOrderData(SortField state) throws CensusAnalyserException {
+    public String getAlphabeticalOrderData(SortField field) throws CensusAnalyserException {
         if (censusCSVMap == null) {
             throw new CensusAnalyserException("No Data Found", CensusAnalyserException.ExceptionType.TYPE_NOTFOUND);
         }
         // Comparator<IndiaCsvDao> censusCSVComparator = Comparator.comparing(census -> census.state);
         List<IndiaCsvDao> indiaCsvDaos = censusCSVMap.values().stream().collect(Collectors.toList());
-        this.sort(indiaCsvDaos, this.sortMap.get(state));
+        this.sort(indiaCsvDaos, this.sortMap.get(field).reversed());
         this.writeInGson(indiaCsvDaos);
         return new Gson().toJson(indiaCsvDaos);
     }
