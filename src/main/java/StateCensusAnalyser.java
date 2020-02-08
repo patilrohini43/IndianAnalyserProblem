@@ -37,11 +37,13 @@ public class StateCensusAnalyser {
     }
 
     public int loadIndiaStateCensusData(String csvFilePath) throws CensusAnalyserException {
-        return this.loadCensusData(csvFilePath,IndiaCensusCSV.class);
+        censusCSVMap = new CensusLoader().loadCensusData(csvFilePath,IndiaCensusCSV.class);
+        return censusCSVMap.size();
     }
 
     public int loadUsCsvCensusData(String usCsvFilePath) throws CensusAnalyserException {
-        return this.loadCensusData(usCsvFilePath,UsCensusCSV.class);
+        censusCSVMap = new CensusLoader().loadCensusData(usCsvFilePath,UsCensusCSV.class);
+        return censusCSVMap.size();
     }
 
     private <E> int loadCensusData(String csvFilePath, Class<?> censusCSVClass) throws CensusAnalyserException {
