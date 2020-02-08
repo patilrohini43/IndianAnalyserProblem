@@ -1,3 +1,4 @@
+import Model.IndiaCensusCSV;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,6 +9,7 @@ public class CensusAnalyserTest {
     private static final String INDIA_CENSUS_CSV_FILE_PATH = "./src/test/resources/IndiaStateCensusData.csv";
     private static final String WRONG_CSV_FILE_PATH = "./src/main/resources/IndiaStateCensusData.csv";
     private static final String INDIA_STATE_PATH = "./src/test/resources/IndiaStateCode.csv";
+    private static final String US_CSV_FILE_PATH = "./src/test/resources/USCensusData.csv";
 
     @Test
     public void givenIndianCensusCSVFileReturnsCorrectRecords() throws CensusAnalyserException {
@@ -53,25 +55,21 @@ public class CensusAnalyserTest {
     }
 
     @Test
-    public void givenIndianStateCsvFile_ShouldReturnExactCount() {
-        try {
-            StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
-           int numCount= censusAnalyser.loadIndiaStateCSVCensusData(INDIA_STATE_PATH);
-            Assert.assertEquals(37,numCount);
-        } catch (CensusAnalyserException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
     public void  givenIndianStateCsvFileData_AplhabeticalOrder() throws CensusAnalyserException {
         StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
         stateCensusAnalyser.loadIndiaStateCensusData(INDIA_CENSUS_CSV_FILE_PATH);
-        String sortedData=stateCensusAnalyser.getAlphabeticalOrderData(SortField.areaInSqKm);
+        stateCensusAnalyser.loadIndiaStateCSVCensusData(INDIA_STATE_PATH);
+        String sortedData=stateCensusAnalyser.getAlphabeticalOrderData(SortField.population);
         IndiaCensusCSV[] indiaCensusCSVList = new Gson().fromJson(sortedData,IndiaCensusCSV[].class);
-        Assert.assertEquals(342239,indiaCensusCSVList[0].areaInSqKm);
+        Assert.assertEquals(199812341,indiaCensusCSVList[0].population);
     }
 
+    @Test
+    public void givenUsCsvFile_ShouldReturnExactCount() throws CensusAnalyserException {
+        StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
+        int usCount = stateCensusAnalyser.loadUsCsvCensusData( US_CSV_FILE_PATH );
+        Assert.assertEquals(51,usCount);
+    }
 }
 
 

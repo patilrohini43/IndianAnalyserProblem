@@ -2,7 +2,7 @@ import com.opencsv.bean.CsvBindByName;
 public class CsvState {
 
     @CsvBindByName(column = "StateName", required = true)
-    public String stateName;
+    public String state;
 
     @CsvBindByName(column = "StateCode", required = true)
     public String stateCode;
@@ -10,7 +10,7 @@ public class CsvState {
     @Override
     public String toString() {
         return "CsvState{" +
-                "stateName='" + stateName + '\'' +
+                "stateName='" + state + '\'' +
                 ", stateCode='" + stateCode + '\'' +
                 '}';
     }
