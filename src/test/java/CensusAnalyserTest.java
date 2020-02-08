@@ -14,7 +14,7 @@ public class CensusAnalyserTest {
     @Test
     public void givenIndianCensusCSVFileReturnsCorrectRecords() throws CensusAnalyserException {
             StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
-            int numOfRecords = censusAnalyser.loadIndiaStateCensusData(INDIA_CENSUS_CSV_FILE_PATH);
+            int numOfRecords = censusAnalyser.loadIndiaStateCensusData(INDIA_CENSUS_CSV_FILE_PATH,INDIA_STATE_PATH);
             Assert.assertEquals(29,numOfRecords);
     }
 
@@ -57,8 +57,7 @@ public class CensusAnalyserTest {
     @Test
     public void  givenIndianStateCsvFileData_AplhabeticalOrder() throws CensusAnalyserException {
         StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
-        stateCensusAnalyser.loadIndiaStateCensusData(INDIA_CENSUS_CSV_FILE_PATH);
-        stateCensusAnalyser.loadIndiaStateCSVCensusData(INDIA_STATE_PATH);
+        stateCensusAnalyser.loadIndiaStateCensusData(INDIA_CENSUS_CSV_FILE_PATH,INDIA_STATE_PATH);
         String sortedData=stateCensusAnalyser.getAlphabeticalOrderData(SortField.population);
         IndiaCensusCSV[] indiaCensusCSVList = new Gson().fromJson(sortedData,IndiaCensusCSV[].class);
         Assert.assertEquals(199812341,indiaCensusCSVList[0].population);

@@ -8,7 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 public class StateCensusAnalyser {
 
@@ -36,54 +35,14 @@ public class StateCensusAnalyser {
         }
     }
 
-    public int loadIndiaStateCensusData(String csvFilePath) throws CensusAnalyserException {
-        censusCSVMap = new CensusLoader().loadCensusData(csvFilePath,IndiaCensusCSV.class);
+    public int loadIndiaStateCensusData(String... censusCsvFilePath) throws CensusAnalyserException {
+        censusCSVMap = new CensusLoader().loadCensusData(IndiaCensusCSV.class,censusCsvFilePath);
         return censusCSVMap.size();
     }
 
-    public int loadUsCsvCensusData(String usCsvFilePath) throws CensusAnalyserException {
-        censusCSVMap = new CensusLoader().loadCensusData(usCsvFilePath,UsCensusCSV.class);
+    public int loadUsCsvCensusData(String... usCsvFilePath) throws CensusAnalyserException {
+        censusCSVMap = new CensusLoader().loadCensusData(UsCensusCSV.class,usCsvFilePath);
         return censusCSVMap.size();
-    }
-
-    private <E> int loadCensusData(String csvFilePath, Class<?> censusCSVClass) throws CensusAnalyserException {
-        try {
-                Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
-                ICsvBuilder csvBuilder = CsvBuilderFactory.createCsvBuilder();
-                Iterator<E> censusCSVIterator = csvBuilder.getCSVFilterIterator(reader, censusCSVClass);
-                Iterable<E> csvIterable = () -> censusCSVIterator;
-                if(censusCSVClass.getName().equals("Model.IndiaCensusCSV")) {
-                    StreamSupport.stream(csvIterable.spliterator(), false)
-                            .map(IndiaCensusCSV.class::cast)
-                            .forEach(census -> censusCSVMap.put(census.state, new CensusDao(census)));
-                }
-                else if(censusCSVClass.getName().equals("Model.UsCensusCSV"))
-                {
-                    StreamSupport.stream(csvIterable.spliterator(), false)
-                            .map(UsCensusCSV.class::cast)
-                            .forEach(census -> censusCSVMap.put(census.state, new CensusDao(census)));
-                }
-            return censusCSVMap.size();
-            } catch (IOException e) {
-            throw new CensusAnalyserException(e.getMessage(),
-                    CensusAnalyserException.ExceptionType.TYPE_NOTFOUND);
-            }
-    }
-
-    public int loadIndiaStateCSVCensusData(String csvFilePath) throws CensusAnalyserException {
-        try {
-            Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
-            ICsvBuilder csvBuilder = CsvBuilderFactory.createCsvBuilder();
-            Iterator<CsvState> censusCSVIterator = csvBuilder.getCSVFilterIterator(reader, CsvState.class);
-            Iterable<CsvState> csvStatesItearble = () -> censusCSVIterator;
-            StreamSupport.stream(csvStatesItearble.spliterator(), false)
-                    .filter(csvState -> censusCSVMap.get(csvState.state) != null )
-                    .forEach(census -> censusCSVMap.get(census.state).stateCode = census.stateCode);
-            return censusCSVMap.size();
-        } catch (IOException e) {
-            throw new CensusAnalyserException(e.getMessage(),
-                    CensusAnalyserException.ExceptionType.TYPE_NOTFOUND);
-        }
     }
 
     public String getAlphabeticalOrderData(SortField field) throws CensusAnalyserException {
