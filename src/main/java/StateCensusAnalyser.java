@@ -1,5 +1,4 @@
 import Model.IndiaCensusCSV;
-import Model.UsCensusCSV;
 import com.google.gson.Gson;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -37,7 +36,7 @@ public class StateCensusAnalyser {
     }
 
     public int loadCsvCensusData(Country country, String... censusCsvFilePath) throws CensusAnalyserException {
-        censusCSVMap = new CensusLoader().loadCensusData(country,censusCsvFilePath);
+        censusCSVMap = new CensusAdapterFactory().getCensusData(country,censusCsvFilePath);
         return censusCSVMap.size();
     }
 
