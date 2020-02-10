@@ -1,9 +1,8 @@
-import Model.IndiaCensusCSV;
 import Model.UsCensusCSV;
 
 import java.util.Map;
 
-public class UsCensusAdapter extends CensusAdater{
+public class UsCensusAdapter extends CensusAdapter {
 
     @Override
     public Map<String, CensusDao> loadCensusData(String... censusCsvFilePath) throws CensusAnalyserException {

@@ -1,3 +1,3 @@
 public enum SortField {
-        STATE, population ,areaInSqKm, densityPerSqKml;
+        STATE, POPULATION ,TOTALAREAD, POPULATIONDENSITY;
 }

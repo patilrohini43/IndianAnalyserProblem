@@ -1,4 +1,5 @@
 import Model.IndiaCensusCSV;
+import Model.UsCensusCSV;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
@@ -58,9 +59,18 @@ public class CensusAnalyserTest {
     public void  givenIndianStateCsvFileData_AplhabeticalOrder() throws CensusAnalyserException {
         StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
         stateCensusAnalyser.loadCsvCensusData(StateCensusAnalyser.Country.India,INDIA_CENSUS_CSV_FILE_PATH,INDIA_STATE_PATH);
-        String sortedData=stateCensusAnalyser.getAlphabeticalOrderData(SortField.population);
+        String sortedData=stateCensusAnalyser.getAlphabeticalOrderData(SortField.POPULATION);
         IndiaCensusCSV[] indiaCensusCSVList = new Gson().fromJson(sortedData,IndiaCensusCSV[].class);
-        Assert.assertEquals(199812341,indiaCensusCSVList[0].population);
+        Assert.assertEquals(1.99812341E8,indiaCensusCSVList[0].population,0);
+    }
+
+    @Test
+    public void  givenUSStateCsvFileData_AplhabeticalOrder() throws CensusAnalyserException {
+        StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
+        stateCensusAnalyser.loadCsvCensusData(StateCensusAnalyser.Country.US,US_CSV_FILE_PATH,INDIA_STATE_PATH);
+        String sortedData=stateCensusAnalyser.getAlphabeticalOrderData(SortField.POPULATIONDENSITY);
+        UsCensusCSV[] indiaCensusCSVList = new Gson().fromJson(sortedData, UsCensusCSV[].class);
+        Assert.assertEquals(3805.61,indiaCensusCSVList[0].populationDensity,0);
     }
 
     @Test

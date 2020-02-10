@@ -1,16 +1,14 @@
 import Model.IndiaCensusCSV;
-import Model.UsCensusCSV;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.StreamSupport;
 
-public class IndiaCensusAdapter  extends CensusAdater{
+public class IndiaCensusAdapter  extends CensusAdapter {
 
 
     @Override
@@ -20,7 +18,7 @@ public class IndiaCensusAdapter  extends CensusAdater{
         return censusDaoMap;
     }
 
-    public int loadIndiaStateCSVCensusData(Map<String, CensusDao> censusCSVMap,String csvFilePath) throws CensusAnalyserException {
+    private int loadIndiaStateCSVCensusData(Map<String, CensusDao> censusCSVMap,String csvFilePath) throws CensusAnalyserException {
         try {
             Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
             ICsvBuilder csvBuilder = CsvBuilderFactory.createCsvBuilder();

@@ -18,8 +18,9 @@ public class StateCensusAnalyser {
     public StateCensusAnalyser() {
         this.sortMap = new HashMap<>();
         this.sortMap.put(SortField.STATE, Comparator.comparing(census -> census.state));
-        this.sortMap.put(SortField.population, Comparator.comparing(census -> census.population));
-        this.sortMap.put(SortField.areaInSqKm, Comparator.comparing(census -> census.totalArea));
+        this.sortMap.put(SortField.POPULATION,Comparator.comparing(census->census.population));
+        this.sortMap.put(SortField.POPULATIONDENSITY, Comparator.comparing(census -> census.populationDensity));
+        this.sortMap.put(SortField.TOTALAREAD, Comparator.comparing(census -> census.totalArea));
     }
 
     public int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException {
@@ -44,8 +45,9 @@ public class StateCensusAnalyser {
         if (censusCSVMap == null) {
             throw new CensusAnalyserException("No Data Found", CensusAnalyserException.ExceptionType.TYPE_NOTFOUND);
         }
-        // Comparator<IndiaCsvDao> censusCSVComparator = Comparator.comparing(census -> census.state);
-        List<CensusDao> indiaCsvDaos = censusCSVMap.values().stream().collect(Collectors.toList());
+       // Comparator<CensusDao> censusCSVComparator = Comparator.comparing(census -> census.state);
+        List<CensusDao> indiaCsvDaos = censusCSVMap.values().stream()
+                .collect(Collectors.toList());
         this.sort(indiaCsvDaos, this.sortMap.get(field).reversed());
         this.writeInGson(indiaCsvDaos);
         return new Gson().toJson(indiaCsvDaos);
