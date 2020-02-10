@@ -14,6 +14,7 @@ public class StateCensusAnalyser {
     List<CensusDao> censusCSVList = null;
     Map<String, CensusDao> censusCSVMap = new HashMap<>();
     Map<SortField, Comparator<CensusDao>> sortMap = null;
+    public enum Country{ India,US};
 
     public StateCensusAnalyser() {
         this.sortMap = new HashMap<>();
@@ -35,13 +36,8 @@ public class StateCensusAnalyser {
         }
     }
 
-    public int loadIndiaStateCensusData(String... censusCsvFilePath) throws CensusAnalyserException {
-        censusCSVMap = new CensusLoader().loadCensusData(IndiaCensusCSV.class,censusCsvFilePath);
-        return censusCSVMap.size();
-    }
-
-    public int loadUsCsvCensusData(String... usCsvFilePath) throws CensusAnalyserException {
-        censusCSVMap = new CensusLoader().loadCensusData(UsCensusCSV.class,usCsvFilePath);
+    public int loadCsvCensusData(Country country, String... censusCsvFilePath) throws CensusAnalyserException {
+        censusCSVMap = new CensusLoader().loadCensusData(country,censusCsvFilePath);
         return censusCSVMap.size();
     }
 
